@@ -17,11 +17,15 @@ from firebase import firebase
 import motionDetection
 
 class dataCollection:
-    def __init__(self, sensorId):
+    def __init__(self, sensorId, record_time):
         self.sensorId = sensorId
         self.serial_port = serial.Serial(port='/dev/ttyACM0', baudrate=57600)
 
-        self.run_time = int(raw_input('Enter the amount of seconds you want to run this: '))
+        if (record_time == 0):
+            self.run_time = int(raw_input('Enter the amount of seconds you want to run this: '))
+        else:
+            self.run_time = record_time
+
         self.start_time = time.time()
 
     def save_frame(self, frame):

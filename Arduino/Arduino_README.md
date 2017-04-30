@@ -2,7 +2,7 @@
 
 This folder includes the code necessary to extract the 16x4 temperature frames from the Melexis 90621 via I2C and utilizing the Wire Arduino library. It also includes a diagram of the circuit connections for proper usage.
 
-All you need is the Arduino IDE program to be able to upload this program into any Arduino board.
+All you need is the Arduino IDE program to be able to upload this program into any Arduino board. Arduino Software link: https://www.arduino.cc/en/Main/Software
 
 ### wireMLX90621:
 
