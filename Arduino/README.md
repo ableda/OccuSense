@@ -1,12 +1,12 @@
 # MLX90621 Library
 
-This folder includes the code necessary to extract the 16x4 temperature frames from the Melexis 90621 via I2C and utilizing the Wire Arduino library. It also includes a diagram of the circuit connections for proper usage.
+This folder includes the code necessary to extract the 16x4 temperature frames from the Melexis 90621 via I2C and utilizing the Wire Arduino library. It also includes a diagram schematic of the circuit connections for proper usage.
 
 All you need is the Arduino IDE program to be able to upload this program into any Arduino board. Arduino Software link: https://www.arduino.cc/en/Main/Software
 
 ### wireMLX90621:
 
-The wireMLX90621 is the class header file. This is the main file to look at to understand what is required to do to read in the temperature array. Most constants and the resource behind this code is from the Melexis 90621 datasheet which is also in this folder. The principle of operation as to how the temperatures are extracted from the raw bytes is described in the first README. A more detailed description is provided below in the implementation file for this class.
+The wireMLX90621 is the class header file. This is the main file to look at to understand what is required to do to read in the temperature array. Most constants and the resource behind this code is from the Melexis 90621 datasheet which is also in this folder. The principle of operation as to how the temperatures are extracted from the raw bytes is described in the next section. 
 
 
 ### MLX90621:
