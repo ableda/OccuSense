@@ -10,32 +10,38 @@ import scipy.misc
 import serial
 import requests
 import json
+from gpiozero import MotionSensor
 import threading
 from firebase import firebase
 import motionDetection
+import dataCollection
 
 class Occusense:
-    def __init__(self, sensorId):
+    def __init__(self, sensorId, database):
         #Useful sensor variables
         self.sensorId = sensorId
         self.serial_port = serial.Serial(port='/dev/ttyACM0', baudrate=57600)
         self.record = False
         self.ipAddress = '192.168.1.4'
         self.on = True
+        self.firebase_url = 'https://occuserver.firebaseio.com/'
 
-        databaseCheck = threading.Thread(target=self.check_database)
-        databaseCheck.start()
+        if database:
+            databaseCheck = threading.Thread(target=self.check_database)
+            databaseCheck.start()
+
+            pirReset = threading.Thread(target=self.pir_reset)
+            pirReset.start()
 
 
     ####Function pushes +1 or -1 if someone walks through#############
     def server_push(self, count):
-        firebase_url = 'https://occuserver.firebaseio.com/'
 
         time_hhmmss = time.strftime('%H:%M:%S')
         date_1 = str(time.strftime('%d-%m-%Y'))
 
         data = {'time':time_hhmmss,'value':count, 'sensor_id':self.sensorId}
-        result = requests.post(firebase_url + '/' + date_1 + '.json', data=json.dumps(data))
+        result = requests.post(self.firebase_url + '/' + date_1 + '.json', data=json.dumps(data))
         print 'Record inserted. Result Code = ' + str(result.status_code) + ',' + result.text + "\n"
 
 
@@ -43,8 +49,7 @@ class Occusense:
     def check_database(self):
         while self.on == True:
             #print "Checking database"
-            firebase_url = 'https://occuserver.firebaseio.com/'
-            fire = firebase.FirebaseApplication(firebase_url, None)
+            fire = firebase.FirebaseApplication(self.firebase_url, None)
             result = fire.get('/sensors/' + str(self.sensorId) + '/record', None)
             if result >= 1:
                 self.record_time = int(fire.get('/sensors/' + str(self.sensorId) + '/record_time', None))
@@ -60,7 +65,21 @@ class Occusense:
             else:
                 self.on = False
 
-    #New way (while loop outside function) variables are part of the class instance
+    #Function to send a reset count if no motion is detected in the room for 2 hours
+    def pir_reset(self):
+        pir = MotionSensor(4)
+        time_to_reset = 60*60*2  #2 hours in seconds
+        start_time = time.time()
+
+        while True:
+            if (time.time() - start_time) > time_to_reset:
+                fire = firebase.FirebaseApplication(self.firebase_url, None)
+                fire.patch('/sensors/' + str(self.sensorId), {'reset': 1})
+
+            if pir.motion_detected:
+                start_time = time.time()
+
+
     def count_people(self):
         #Global Variables
         index = 100
@@ -79,7 +98,7 @@ class Occusense:
 
         while sensor.on:
             if (sensor.record):
-                data = dataCollection.dataCollection(self.sensorId)
+                data = dataCollection.dataCollection(self.sensorId, self.record_time)
                 data.run()
 
             else:
@@ -119,11 +138,9 @@ class Occusense:
                                             	motion = motionDetection.motionDetection()
                                     		print len(ppl)
                 				    	if (len(ppl) < 8):
-                                                    	numframes = len(ppl)
                                         			c = motion.counting(np.absolute(ppl))
 
                                     		else:
-                                                    	numframes = 5
                                         			c = motion.counting(np.absolute(ppl[-5:]))
 
                                     		print "Value of c is: ", c
