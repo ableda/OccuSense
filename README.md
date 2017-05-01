@@ -14,19 +14,7 @@ This repository contains all the code necessary to replicate a door system and t
 
 ## Arduino
 
-  Contains the library to extract the 16x4 temperature arrays in degrees Celsius. Includes a circuit diagram to properly set up the communication. The following principle of operation points describe how the temperature at each pixel is determined from the raw bytes extracted from the sensor.
-
-  Principle of Operation:
-
-    - Ta calculation
-
-    - Pixel offset cancelling
-
-    - Pixel to pixel sensitivity difference compensation
-
-    - Object emissivity compensation
-
-    - Object temperature calculation
+  Contains the library to extract the 16x4 temperature arrays in degrees Celsius. Includes a circuit diagram to properly set up the communication. The readme in the folder clearly describes the principles of operation and the calculations that are necessary.
 
   Here are the specifications for the main thermal sensor used by this system.
 
@@ -55,7 +43,7 @@ This repository contains all the code necessary to replicate a door system and t
 
   The Pi will also be the home to store raw data collected from the sensor. This data will be formatted in two different files. On one hand one file will store the raw temperature frames with a time stamp in a file named after the date. On the other it will store a file with the detections (a person walked in and out) with a time stamp, a value 1 or -1 and the amount of frames which passed the threshold. That way the user has the ability to visualize the underlying data and be able to perform more research on improving the existing algorithm or adjusting it for another application.
 
-  Finally the Pi also hosts the PIR sensor for the reset mechanism, here are the specs.
+  Finally the Pi also hosts the PIR sensor for the reset mechanism, here are the specifications.
 
 ### Parallax Wide Angle PIR Sensor
 
