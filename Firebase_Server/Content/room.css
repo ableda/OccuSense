@@ -1,0 +1,142 @@
+body{
+    font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+/* Navbar */
+.navbar#navigation img {
+    margin: 0 0 0 0;
+    transform: scale(0.5);
+    fill: white;
+}
+.navbar#navigation{
+    border-radius: 0px;
+    background: none;
+    border: none;
+    height: 50px;
+    background-color: #7aced6;
+    box-shadow: 0 5px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.navbar#navigation .nav-pills a{
+    color: white;
+    font-size: 20px;
+}
+.navbar#navigation .nav-pills a:hover{
+    color: #7aced6;
+}
+
+.navbar-toggle{
+    border-color: white;
+}
+.navbar-toggle.collapsed:hover{
+    animation: pop 0.5s;
+    background-color: #F3796A;
+}
+.navbar-toggle span{
+    background-color: white;
+}
+#fullNav{
+    display: block;
+}
+#toCollapse ul{
+    display: none;
+}
+
+@keyframes spin {
+    0% {transform:rotate(0deg);}
+    100% {transform:rotate(360deg);}
+}
+
+@keyframes scale {
+    0%,100% {transform:scale(1);}
+    50% {transform:scale(0.5);}
+}
+
+@keyframes pop {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+
+@keyframes scale {
+    0% {transform: scaleX(1);}
+    50% {transform: scaleX(0.1);}
+    100% {transform: scaleX(1); fill: #F3796A;}
+}
+
+h2, h3, p, th, td {
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+#currentOccupancy, #maxOccupancy, #occupancyPercentage{
+    font-size: 3em;
+}
+
+#occupancyProgress {
+  margin: 20px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+#occupancyPercentage {
+    text-align: center;
+}
+
+/* Half-screen sizes */
+@media screen and (max-width: 775px){
+    
+    /* Navigation */
+    .navbar#navigation .nav-pills a{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #fullNav{
+        display: none;
+    }
+    #toCollapse ul{
+        display: block;
+        background-color: #7aced6;
+        box-shadow: 0 5px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        border-radius: 5px;
+    }
+    #toCollapse a{
+        color: white;
+        font-size: 20px;
+    }
+    #toCollapse a:hover{
+        color: #7aced6;
+    }    
+}
+
+/*For mobile devices */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px)
+and (-webkit-min-device-pixel-ratio: 2){
+    .navbar#navigation img {
+        margin: 15px 15px 0 30px;
+        transform: scale(1.5);
+    }
+
+    .navbar#navigation{
+        height: 150px;
+    }
+    .navbar#navigation .nav-pills a{
+        padding-top: 30px;
+        font-size: 65px;
+        padding-bottom: 25px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

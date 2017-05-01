@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <script src="scripts/bootstrap.min.js"></script>
+    <script rel="stylesheet" href="Content/bootstrap-theme.min.css"></script>
+    <link rel="stylesheet" href="Content/setup.css" />
+    <link rel="stylesheet" href="Content/animate.css" />
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <link rel="stylesheet" href="Content/font-awesome.min.css" />
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top" id="navigation">
+        <div class="container-fluid">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#toCollapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" href="#"><img src="imgs/OccuSenseLogo.svg" width="40%" height="25%" alt="K Logo" class="center-block img-responsive" /></a> !-->
+            <div class="nav navbar-nav">
+                <ul class="nav nav-pills" id="fullNav">
+                    <li role="presentation">
+                        <a href="#">Occusense</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="room.html">Rooms</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="setup.html">Setup</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="collapse navbar-collapse pull-right" id="toCollapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation">
+                        <a href="home.html">Home</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="room.html">Rooms</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="setup.html">Setup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>   
+    </nav>
+    <br><br><br><br><br>
+    
+    <div class="container">
+    
+    <!-- SETUP SENSOR FORM -->
+<div class="text-center" style="padding:50px 0">
+	<div class="logo">sensor setup</div>
+	<!-- Main Form -->
+	<div class="login-form-1">
+		<form id="register-form" class="text-left">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<select name="rooms" placeholder="select room" id="sensor_dropdown">
+                        </select>
+					</div>
+					<div class="form-group">
+                        <select name="rooms" placeholder="select room" id="room_dropdown">
+                        </select>
+                        
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+					</div>
+					<div class="form-group">
+						<input type="number" class="form-control" id="current_occupancy" name="reg_password_confirm" placeholder="current occupancy">
+					</div>
+				</div>
+				<button type="button" id="sensor_submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
+			</div>
+		</form>
+	</div>
+	<!-- end:Main Form -->
+    </div>
+    </div>
+    
+    
+    
+    
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="room_create_close" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">room setup</h4>
+        </div>
+        <div class="modal-body">
+          <div class="login-form-1">
+                <form id="register-form" class="text-left">
+                    <div class="login-form-main-message"></div>
+                    <div class="main-login-form">
+                        <div class="login-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="room_name" name="room_name" placeholder="room name">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="max_occupancy" name="max_occupancy" placeholder="max occupancy">
+                            </div>
+                        </div>
+                        <button type="button" class="login-button" id="room_submit"><i class="fa fa-chevron-right"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+</body>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAsXzwMeQpaZYf2KZsMBM0WdXDz0xWfug8",
+        authDomain: "occuserver.firebaseapp.com",
+        databaseURL: "https://occuserver.firebaseio.com",
+        storageBucket: "occuserver.appspot.com",
+        messagingSenderId: "334611600995"
+      };
+      firebase.initializeApp(config);
+
+      // Get a reference to the database service
+    var database = firebase.database(); 
+   
+        
+    var sensorDropdown = document.getElementById('sensor_dropdown');        
+        
+    var sensorRef = database.ref('sensors/');
+    var sensorDropdownUpdate = function(){
+        sensorRef.on("value", function(snapshot){
+            sensorDropdown.innerHTML = "";
+            snapshot.forEach(function(childSnapshot){
+                var opt = document.createElement("option");
+                opt.value = childSnapshot.key;
+                opt.innerHTML = "Sensor "+childSnapshot.key;
+                sensorDropdown.appendChild(opt);
+            });
+        });
+    };
+    sensorDropdownUpdate();
+    
+    var roomDropdown = document.getElementById('room_dropdown');        
+        
+    var roomRef = database.ref('rooms/');
+    var roomDropdownUpdate = function(){
+        roomRef.on("value", function(snapshot){
+            roomDropdown.innerHTML = "";
+            snapshot.forEach(function(childSnapshot){
+                var opt = document.createElement("option");
+                opt.value = childSnapshot.key;
+                opt.innerHTML = "Room "+childSnapshot.key;
+                roomDropdown.appendChild(opt);
+            });
+        });
+    };
+    roomDropdownUpdate();
+     
+    $(document).ready(function(){
+        console.log("document ready");
+
+         $("#room_submit").on("click", function () {
+             var roomname = document.getElementById('room_name').value;   
+             var maxOcc = document.getElementById('max_occupancy').value;
+             roomRef.child(roomname).set({'max_occupancy':maxOcc});
+             document.getElementById('room_create_close').click();
+             roomDropdownUpdate();
+         });
+        
+        $("#sensor_submit").on("click", function () {
+                        
+            var sensorname = sensorDropdown.options[sensorDropdown.selectedIndex].value;
+            var roomname = roomDropdown.options[roomDropdown.selectedIndex].value;
+            var currentOcc = document.getElementById('current_occupancy').value;
+            console.log(sensorname);
+            console.log(roomname);
+            console.log(currentOcc); //utilize the currentOcc value
+            roomRef.child(roomname).set({'sensor_id':sensorname});
+            //send to page
+            sensorDropdownUpdate();
+        });
+    });
+        
+    
+    
+    
+    </script>
+    
+</html>
