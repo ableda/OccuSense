@@ -10,7 +10,7 @@ Technical Background:
   This algorithm works very effectively for individual doors, where usually only one person walks through at a time. To extend this for bigger doors a machine learning algorithm should probably be developed to distinguish multiple people in a frame and multiple simultaneous walk in and outs. The project contains all the data collection tools necessary to perform extensive research on the data and develop more complex algorithms on top of the already existing one.
 
 
-This repository contains all the code necessary to replicate a door system and the firebase server. The main code to process data and detect/count people is hosted in the Raspberry Pi where most modifications and additions should be made. This repository offers all you need to get the data from the sensor using and Arduino through I2C communication. Getting the data straight from the Raspberry Pi turned out to be a very big challenge but it would be better. The repository also provides all the code necessary to replicate the user interface web server if desired. The following subsections describe some technical specifications and the contents of the repository folders.   
+This repository contains all the code necessary to replicate a door system and the firebase server. The main code to process data and detect/count people is hosted in the Raspberry Pi where most modifications and additions should be made. This repository offers all you need to get the data from the sensor using and Arduino through I2C communication. Getting the sensor data straight from the Raspberry Pi turned out to be a very big challenge but it would be preferred. The repository also provides all the code necessary to replicate the user interface web server if desired. The following subsections describe the contents of each of the repository folders.    
 
 ## Arduino
 
@@ -63,3 +63,8 @@ This repository contains all the code necessary to replicate a door system and t
 ## Firebase Server
 
   The Firebase folder contains all the necessary code and instructions to deploy the same server that we currently have for the OccuSense system. The server is very important as it brings together all the independent sensor systems into rooms and serves as a great user friendly way to use the system. The independent sensor systems can also be used without a server, but extra code has to be added to keep room occupancy without the server. The sensor systems only send +1 and -1s to the server, not room counts. The server puts together the ins and outs of the different sensor systems in one room.
+
+
+## Reports
+
+  The Reports directory contains the reports that we did throughout the course of the course. It includes the three testing days we had as well as the final users's manual which offers a detailed description of the final system. Each testing has the test plan and the test report. In the first one we did the Arduino library to collect data from the thermal sensor. In the second testing we put together all the elements of the project (server, raspberry pi and Arduino). Finally in the third we showed that the whole system worked well.
