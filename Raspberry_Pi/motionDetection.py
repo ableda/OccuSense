@@ -176,16 +176,16 @@ class motionDetection:
 
             #If it didnt error check try with less frames
             	if (len(heat_map) > 3):
-                	self.save_subtraction(heat_map)
+                	#self.save_subtraction(heat_map)
                 	print "Trying again..."
                 	self.counting(np.absolute(heat_map[-3:]))
 
             	#Last resort the last frame decides
             	print "Last frame decides"
-            	if (top_rows >= bottom_rows+5):
+            	if (top_rows >= bottom_rows+10):
             		return -1
 
-            	elif (top_rows+5 <= bottom_rows):
+            	elif (top_rows+10 <= bottom_rows):
                     return 1
 
     	    	return 0

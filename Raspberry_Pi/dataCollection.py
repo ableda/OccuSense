@@ -9,7 +9,6 @@ import numpy as np
 import time
 import datetime
 import PIL
-import scipy.misc
 import serial
 import requests
 import json
@@ -29,22 +28,22 @@ class dataCollection:
         self.start_time = time.time()
 
     def save_frame(self, frame):
-	date_1 = str(time.strftime('%d-%m-%Y'))
+	date_1 = str(time.strftime('%Y-%m-%d'))
 	time2 = datetime.datetime.now().strftime("%H:%M:%S.%f")
-        filename = date_1 + ".txt"
+        filename = "Data/" + date_1 + ".txt"
         fileSave = open(filename, 'a')
 	fileSave.write(time2 + "\n")
 	for n in frame:
 		fileSave.write("%s  " % n)
 
-        fileSave.write("\n\n")
+        fileSave.write("\n")
 
     def save_detection(self, c, frames):
-        date_1 = str(time.strftime('%d-%m-%Y'))
+        date_1 = str(time.strftime('%Y-%m-%d'))
         time2 = datetime.datetime.now().strftime("%H:%M:%S.%f")
-        filename = date_1 + "-detection.txt"
+        filename = "Data/" + date_1 + "-detection.txt"
         fileSave = open(filename, 'a')
-        fileSave.write(time2 + "\n")
+        fileSave.write(time2 + "    ")
         fileSave.write(str(c) + " " + str(frames) + "f\n")
 
 

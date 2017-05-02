@@ -67,4 +67,4 @@ This repository contains all the code necessary to replicate a door system and t
 
 ## Reports
 
-  The Reports directory contains the reports that we did throughout the course of the course. It includes the three testing days we had as well as the final users's manual which offers a detailed description of the final system. Each testing has the test plan and the test report. In the first one we did the Arduino library to collect data from the thermal sensor. In the second testing we put together all the elements of the project (server, raspberry pi and Arduino). Finally in the third we showed that the whole system worked well.
+  The Reports directory contains the reports that we did throughout the course of the class. It includes the three testing days we had as well as the final users's manual which offers a detailed description of the final system. Each testing has the test plan and the test report. In the first one we did the Arduino library to collect data from the thermal sensor. In the second testing we put together all the elements of the project (server, raspberry pi and Arduino). Finally in the third we showed that the whole system worked well.

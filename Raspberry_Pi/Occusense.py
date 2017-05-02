@@ -6,7 +6,6 @@ import numpy as np
 import time
 import datetime
 import PIL
-import scipy.misc
 import serial
 import requests
 import json
@@ -22,6 +21,7 @@ class OccuSense:
         self.sensorId = sensorId
         self.serial_port = serial.Serial(port='/dev/ttyACM0', baudrate=57600)
         self.record = False
+        self.record_time = 0
         self.ipAddress = '192.168.1.4'
         self.on = True
         self.firebase_url = 'https://occuserver.firebaseio.com/'
@@ -29,7 +29,6 @@ class OccuSense:
         if database:
             databaseCheck = threading.Thread(target=self.check_database)
             databaseCheck.start()
-
             #pirReset = threading.Thread(target=self.pir_reset)
             #pirReset.start()
 
@@ -47,7 +46,7 @@ class OccuSense:
 
     #Function checks database constantly (for possible record command) works in a separate thread
     def check_database(self):
-        while self.on == True:
+        while True:
             #print "Checking database"
             fire = firebase.FirebaseApplication(self.firebase_url, None)
             result = fire.get('/sensors/' + str(self.sensorId) + '/record', None)
@@ -64,6 +63,8 @@ class OccuSense:
                 self.on = True
             else:
                 self.on = False
+
+            time.sleep(0.300)
 
     #Function to send a reset count if no motion is detected in the room for 2 hours
     def pir_reset(self):
@@ -98,8 +99,10 @@ class OccuSense:
 
         while self.on:
             if (self.record):
+                print "Recording data..."
                 data = dataCollection.dataCollection(self.sensorId, self.record_time)
                 data.run()
+                print "Data recorded"
 
             else:
             	start = False
