@@ -29,8 +29,8 @@ class OccuSense:
         if database:
             databaseCheck = threading.Thread(target=self.check_database)
             databaseCheck.start()
-            #pirReset = threading.Thread(target=self.pir_reset)
-            #pirReset.start()
+            pirReset = threading.Thread(target=self.pir_reset)
+            pirReset.start()
 
 
     ####Function pushes +1 or -1 if someone walks through#############
@@ -74,8 +74,9 @@ class OccuSense:
 
         while True:
             if (time.time() - start_time) > time_to_reset:
-                fire = firebase.FirebaseApplication(self.firebase_url, None)
-                fire.patch('/sensors/' + str(self.sensorId), {'reset': 1})
+                data = {'reset': 1}
+                result = requests.post(self.firebase_url + '/' + date_1 + '.json', data=json.dumps(data))
+                print 'Record inserted. Result Code = ' + str(result.status_code) + ',' + result.text + "\n"
 
             if pir.motion_detected:
                 start_time = time.time()

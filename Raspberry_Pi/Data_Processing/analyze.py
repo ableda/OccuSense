@@ -9,11 +9,6 @@ import numpy as np
 from pylab import *
 
 def parse(temp):
-    filename = raw_input("Enter filename: ")
-    opener = filename + ".txt"
-    temp = open(opener,'r').read().split('\n')
-
-    del temp[0]
 
     frame =[]
     heatmap = []
@@ -28,6 +23,11 @@ def parse(temp):
 
     return heatmap
 
+
+
+filename = raw_input("Enter filename: ")
+opener = filename + ".txt"
+temp = open(opener,'r').read().split('\n')
 
 heat_map = parse(temp)
 
