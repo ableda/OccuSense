@@ -98,30 +98,28 @@ class dataCollection:
 
                     		#Threshold based on variance
         			if (np.var(frame) > 1.0):
-
                         		isPerson = True
+
         				#Background Subtraction
         				for i in range(len(frame)):
         					sub[i] = int((frame[i] - background[i]))
-
-    					if (abs(sub[i]) == 1):
-    						sub[i] = 0
+    						if (abs(sub[i]) == 1):
+    							sub[i] = 0
 
     				    	if (np.amax(sub) > 2):
                     				ppl.append(sub)
 
-                            self.save_frame(raw_frame)
+                           		self.save_frame(raw_frame)
 
         			else:
                         		if (isPerson == True) and (len(ppl) > 2):
                                         	motion = motionDetection.motionDetection()
                                 		print len(ppl)
+						numframes = len(ppl)
             				    	if (len(ppl) < 8):
-                                                	numframes = len(ppl)
                                     			c = motion.counting(np.absolute(ppl))
 
                                 		else:
-                                                	numframes = 5
                                     			c = motion.counting(np.absolute(ppl[-5:]))
 
                                 		print "Value of c is: ", c

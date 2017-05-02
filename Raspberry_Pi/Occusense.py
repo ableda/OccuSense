@@ -16,7 +16,7 @@ from firebase import firebase
 import motionDetection
 import dataCollection
 
-class Occusense:
+class OccuSense:
     def __init__(self, sensorId, database):
         #Useful sensor variables
         self.sensorId = sensorId
@@ -30,8 +30,8 @@ class Occusense:
             databaseCheck = threading.Thread(target=self.check_database)
             databaseCheck.start()
 
-            pirReset = threading.Thread(target=self.pir_reset)
-            pirReset.start()
+            #pirReset = threading.Thread(target=self.pir_reset)
+            #pirReset.start()
 
 
     ####Function pushes +1 or -1 if someone walks through#############
@@ -96,8 +96,8 @@ class Occusense:
         background = [0] * 64
         meanprevious = [0] * 64
 
-        while sensor.on:
-            if (sensor.record):
+        while self.on:
+            if (self.record):
                 data = dataCollection.dataCollection(self.sensorId, self.record_time)
                 data.run()
 
@@ -130,21 +130,21 @@ class Occusense:
         					if (abs(sub[i]) == 1):
         						sub[i] = 0
 
-        				    	if (np.amax(sub) > 2):
-                        				ppl.append(sub)
+					if (np.amax(sub) > 2):
+                        			ppl.append(sub)
 
             			else:
                             		if (isPerson == True) and (len(ppl) > 2):
                                             	motion = motionDetection.motionDetection()
                                     		print len(ppl)
-                				    	if (len(ppl) < 8):
-                                        			c = motion.counting(np.absolute(ppl))
+                				if (len(ppl) < 8):
+                                        		c = motion.counting(np.absolute(ppl))
 
                                     		else:
-                                        			c = motion.counting(np.absolute(ppl[-5:]))
+                                        		c = motion.counting(np.absolute(ppl[-5:]))
 
                                     		print "Value of c is: ", c
-                					if (c != 0):
+                				if (c != 0):
                                     			self.server_push(c)
 
                                     		del ppl[:]
