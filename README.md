@@ -3,6 +3,7 @@
 OccuSense is a room occupancy detection system that uses the thermal infrared sensor Melexis 90621 mounted on top of doorways to count people entering and exiting. The system includes a user friendly web server hosted in Firebase to provide visualization of current and historical room occupancy and an easy way to combine multiple doorway subsystems into the same or different room. Each doorway has its own independent system which uses an Arduino for the I2C communication to extract the temperature values from the thermal sensor and send them to a Raspberry Pi through USB serial port for data processing. The Raspberry Pi is also used as a central hub for networking with the server and includes a PIR (passive infrared) sensor as a reset mechanism, which sets the count back to zero when no motion is detected in the entire room after a long period of time.
 
 Block Diagram:
+
 ![occusense-block-diagram](https://user-images.githubusercontent.com/16342828/32007510-bf68d6fa-b977-11e7-91c1-da3ea2539ef0.png)
 
 Technical Background:
